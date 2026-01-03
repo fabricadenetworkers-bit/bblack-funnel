@@ -544,6 +544,7 @@
                 <form id="qualificationForm" class="space-y-4">
                     <input 
                         type="text" 
+                        id="nombreInput"
                         name="nombre" 
                         required 
                         placeholder="Nombre completo" 
@@ -551,6 +552,7 @@
                     >
                     <input 
                         type="email" 
+                        id="emailInput"
                         name="email" 
                         required 
                         placeholder="Email" 
@@ -558,6 +560,7 @@
                     >
                     <input 
                         type="tel" 
+                        id="telefonoInput"
                         name="telefono" 
                         required 
                         placeholder="Teléfono / WhatsApp (con código país: +34...)" 
@@ -565,6 +568,7 @@
                     >
                     <select 
                         name="pais" 
+                        id="paisInput"
                         required 
                         class="w-full px-6 py-4 bg-gray-800 border border-gray-700 rounded-xl text-white focus:border-yellow-500 focus:outline-none"
                     >
@@ -626,6 +630,43 @@
     </footer>
 
     <script>
+        // Pre-llenar formulario con datos de URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const nombre = urlParams.get('nombre');
+            const email = urlParams.get('email');
+            const telefono = urlParams.get('telefono');
+            
+            if (nombre) {
+                document.getElementById('nombreInput').value = decodeURIComponent(nombre);
+                document.getElementById('nombreInput').readOnly = true;
+                document.getElementById('nombreInput').classList.add('bg-gray-700');
+            }
+            
+            if (email) {
+                document.getElementById('emailInput').value = decodeURIComponent(email);
+                document.getElementById('emailInput').readOnly = true;
+                document.getElementById('emailInput').classList.add('bg-gray-700');
+            }
+            
+            if (telefono) {
+                document.getElementById('telefonoInput').value = decodeURIComponent(telefono);
+                document.getElementById('telefonoInput').readOnly = true;
+                document.getElementById('telefonoInput').classList.add('bg-gray-700');
+            }
+            
+            // Si vienen datos, hacer scroll al formulario después de 3 segundos
+            if (nombre || email || telefono) {
+                setTimeout(() => {
+                    document.getElementById('form-section').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }, 3000);
+            }
+        });
+        
         // Countdown
         function updateCountdown() {
             const targetDate = new Date('2026-01-31T23:59:59').getTime();
